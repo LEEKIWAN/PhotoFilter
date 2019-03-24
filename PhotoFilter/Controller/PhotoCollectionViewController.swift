@@ -25,10 +25,7 @@ class PhotoCollectionViewController: UIViewController {
     var assetCollection: PHAssetCollection?
     
     // MARK: Privates
-    private let cellReuseIdentifier: String = "PhotoCell"
-    private lazy var cachingImageManager: PHCachingImageManager = {
-        return PHCachingImageManager()
-    }()
+    private let cachingImageManager: PHCachingImageManager = PHCachingImageManager()
     
     // MARK:- Life Cycle
     deinit {
@@ -68,29 +65,22 @@ extension PhotoCollectionViewController: UICollectionViewDataSource{
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                                 numberOfItemsInSection section: Int) -> Int {
-        
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.fetchResult?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: PhotoCollectionViewCell
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCollectionViewCell
+        
+        return cell
     }
 }
 
 extension PhotoCollectionViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell: PhotoCollectionViewCell
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellReuseIdentifier,
-                                                  for: indexPath) as! PhotoCollectionViewCell
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                                 willDisplay cell: UICollectionViewCell,
-                                 forItemAt indexPath: IndexPath) {
-        
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell: PhotoCollectionViewCell = cell as? PhotoCollectionViewCell else {
             return
         }
@@ -102,15 +92,14 @@ extension PhotoCollectionViewController: UICollectionViewDelegate {
 // MARK:- UICollectionViewDelegateFlowLayout
 extension PhotoCollectionViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         guard let flowLayout: UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize.zero}
         
         let numberOfCellsInRow: CGFloat = 4
         let viewSize: CGSize = self.view.frame.size
-        let sectionInset: UIEdgeInsets = flowLayout.sectionInset
+        let sectionInset: UIEdgeInsets = flowLayout
+            .sectionInset
         
         let interitemSpace: CGFloat = flowLayout.minimumInteritemSpacing * (numberOfCellsInRow - 1)
         

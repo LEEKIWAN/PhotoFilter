@@ -17,7 +17,7 @@ class AlbumCollectionViewController: UIViewController {
     // MARK:- Properties
     private var fetchResult: PHFetchResult<PHAsset>?
     private var assetCollectionArray: [PHAssetCollection]?
-    private var albumImageArray: [UIImage] = []
+    private var albumArray: [AlbumObject] = []
     
     private let cachingImageManager: PHCachingImageManager = PHCachingImageManager()
     
@@ -96,25 +96,28 @@ extension AlbumCollectionViewController {
             PHAsset.fetchAssets(in: collection, options: nil).count > 0
         }
         
-        self.albumImageArray.removeAll()
-        
-        
-        var options = PHImageRequestOptions()
-        options.resizeMode = PHImageRequestOptionsResizeMode.exact
-        options.deliveryMode = PHImageRequestOptionsDeliveryMode.opportunistic
-        
-        for collectionData in self.assetCollectionArray! {
-            let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collectionData, options: nil)
-            guard let asset: PHAsset = fetchResult.lastObject else { return }
-            
-            
-            self.cachingImageManager.requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: PHImageContentMode.aspectFill, options: options, resultHandler: { (image, _) in
-                self.albumImageArray.append(image!)
-            })
-        }
+        self.createAlbumsArray()
         
         OperationQueue.main.addOperation {
             self.collectionView?.reloadData()
+        }
+    }
+    
+    private func createAlbumsArray() {
+        for collectionData in self.assetCollectionArray! {
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collectionData, options: nil)
+            
+            let numFormatter : NumberFormatter = NumberFormatter();
+            numFormatter.numberStyle = NumberFormatter.Style.decimal
+            let count: Int = fetchResult.count
+            let countText: String = numFormatter.string(from: NSNumber(value: count))!
+            
+            let album = AlbumObject()
+            album.fetchResult = fetchResult
+            album.title = collectionData.localizedTitle
+            album.imageTotalCount = countText
+            
+            self.albumArray.append(album)
         }
     }
 }
@@ -151,31 +154,10 @@ extension AlbumCollectionViewController: UICollectionViewDataSource, UICollectio
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: AlbumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "albumCell", for: indexPath) as! AlbumCollectionViewCell
+        let album = self.albumArray[indexPath.row]
+        
+        cell.setData(album: album, cachingImageManager: self.cachingImageManager)
 
-        let collectionData: PHAssetCollection = self.assetCollectionArray![indexPath.row]
-        let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collectionData, options: nil)
-        let asset: PHAsset = fetchResult.lastObject!
-        //
-        cell.titleLabel.text = collectionData.localizedTitle
-        
-        //
-        let numFormatter : NumberFormatter = NumberFormatter();
-        numFormatter.numberStyle = NumberFormatter.Style.decimal
-        let count: Int = fetchResult.count
-        let countText: String = numFormatter.string(from: NSNumber(value: count))!
-        
-        cell.countLabel.text = countText
-        
-        
-//        cachingImageManager.requestImage(for: asset, targetSize: cell.imageView.frame.size, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { (image, _) in
-//            cell.imageView.image = image
-//        })
-        
-        //
-        let image = self.albumImageArray[indexPath.row]
-        cell.imageView.image = image
-        
-        
         return cell
     }
     
@@ -202,8 +184,8 @@ extension AlbumCollectionViewController: UICollectionViewDataSource, UICollectio
         viewController.title = cell.titleLabel?.text
         
         let fetchOptions: PHFetchOptions = PHFetchOptions()
-        
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        
         OperationQueue().addOperation {
             viewController.fetchResult = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
             viewController.assetCollection = assetCollection

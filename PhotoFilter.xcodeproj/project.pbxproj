@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		833D1421224523AC0057C4E1 /* AlbumObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D1420224523AC0057C4E1 /* AlbumObject.swift */; };
 		8347307F22412A4D00D961BB /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347307E22412A4C00D961BB /* UIColor+Extension.swift */; };
 		835002B122426BD100B4F7F2 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835002B022426BD100B4F7F2 /* PhotoCollectionViewController.swift */; };
 		835002B322426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 835002B222426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		833D1420224523AC0057C4E1 /* AlbumObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumObject.swift; sourceTree = "<group>"; };
 		8347307E22412A4C00D961BB /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		835002B022426BD100B4F7F2 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		835002B222426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotoCollectionViewController.storyboard; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		833D141F2245234D0057C4E1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				833D1420224523AC0057C4E1 /* AlbumObject.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		8347307D22412A4200D961BB /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 			children = (
 				83EA95E822300DC700EF65DE /* AppDelegate.swift */,
 				8347307D22412A4200D961BB /* Common */,
+				833D141F2245234D0057C4E1 /* Model */,
 				83DBA5692237F014003DCD09 /* View */,
 				83DBA5682237F00F003DCD09 /* Controller */,
 				835002AF22426BA500B4F7F2 /* CellModel */,
@@ -196,6 +207,7 @@
 				83DBA56D2237F041003DCD09 /* AlbumCollectionViewController.swift in Sources */,
 				83EA95E922300DC700EF65DE /* AppDelegate.swift in Sources */,
 				8347307F22412A4D00D961BB /* UIColor+Extension.swift in Sources */,
+				833D1421224523AC0057C4E1 /* AlbumObject.swift in Sources */,
 				835002B522426C2A00B4F7F2 /* PhotoCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

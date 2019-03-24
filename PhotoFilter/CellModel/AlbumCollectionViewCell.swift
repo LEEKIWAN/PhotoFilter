@@ -23,23 +23,42 @@ class AlbumCollectionViewCell: UICollectionViewCell {
         self.imageView.layer.cornerRadius = 5.0
     }
     
-    func configureCell(collectionData: PHAssetCollection, cachingImageManager: PHCachingImageManager) {
-        let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collectionData, options: nil)
-        guard let asset: PHAsset = fetchResult.lastObject else { return }
-
-        self.titleLabel.text = collectionData.localizedTitle
+//    func configureCell(collectionData: PHAssetCollection, cachingImageManager: PHCachingImageManager) {
+//        let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collectionData, options: nil)
+//        guard let asset: PHAsset = fetchResult.lastObject else { return }
+//
+//        self.titleLabel.text = collectionData.localizedTitle
+//        
+//        //
+//        let numFormatter : NumberFormatter = NumberFormatter();
+//        numFormatter.numberStyle = NumberFormatter.Style.decimal
+//        let count: Int = fetchResult.count
+//        let countText: String = numFormatter.string(from: NSNumber(value: count))!
+//        self.countLabel.text = countText
+//        
+//        //
+//        cachingImageManager.requestImage(for: asset, targetSize: self.imageView.frame.size, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { (image, _) in
+//            self.imageView.image = image
+//        })
+//        
+//    }
+    
+    func setData(album: AlbumObject, cachingImageManager: PHCachingImageManager) {
+        self.countLabel.text = album.imageTotalCount
+        self.titleLabel.text = album.title
         
-        //
-        let numFormatter : NumberFormatter = NumberFormatter();
-        numFormatter.numberStyle = NumberFormatter.Style.decimal
-        let count: Int = fetchResult.count
-        let countText: String = numFormatter.string(from: NSNumber(value: count))!
-        self.countLabel.text = countText
+        if album.coverImage == nil {
+            cachingImageManager.requestImage(for: (album.fetchResult?.lastObject!)!, targetSize: self.imageView.frame.size, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { (image, _) in
+                album.coverImage = image!
+                self.imageView.image = album.coverImage
+            })
+        }
+        else {
+            self.imageView.image = album.coverImage
+        }
         
-        //
-        cachingImageManager.requestImage(for: asset, targetSize: self.imageView.frame.size, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { (image, _) in
-            self.imageView.image = image
-        })
+        
+        
         
     }
 }
