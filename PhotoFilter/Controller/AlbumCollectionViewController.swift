@@ -35,14 +35,14 @@ extension AlbumCollectionViewController {
         var albumList: [PHAssetCollection] = [PHAssetCollection]()
         
         // 카메라 롤
-        if let cameraRoll: PHAssetCollection = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.smartAlbumUserLibrary, options: nil).firstObject {
+        if let cameraRoll: PHAssetCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: PHAssetCollectionSubtype.smartAlbumUserLibrary, options: nil).firstObject {
             albumList.append(cameraRoll)
         }
         
         // 셀카
-        if let selfieAlbum: PHAssetCollection = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.smartAlbumSelfPortraits, options: nil).firstObject {
-            albumList.append(selfieAlbum)
-        }
+//        if let selfieAlbum: PHAssetCollection = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.smartAlbumSelfPortraits, options: nil).firstObject {
+//            albumList.append(selfieAlbum)
+//        }
         
         // 즐겨찾는 사진
         if let favoriteAlbum: PHAssetCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil).firstObject {
@@ -184,11 +184,11 @@ extension AlbumCollectionViewController: UICollectionViewDataSource, UICollectio
         viewController.title = cell.titleLabel?.text
         
         let fetchOptions: PHFetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         OperationQueue().addOperation {
             viewController.fetchResult = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-            viewController.assetCollection = assetCollection
+            viewController.assetCollection = assetCollection            
         }
         
         self.navigationController?.pushViewController(viewController, animated: true)

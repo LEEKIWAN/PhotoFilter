@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     
@@ -18,7 +19,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
 //        self.imageView.layer.cornerRadius = 5.0
     }
     
-//    func configureCell(collectionData: PHAssetCollection, cachingImageManager: PHCachingImageManager) {
-//        
-//    }
+    
+    func setData(asset: PHAsset, cachingImageManager: PHCachingImageManager) {
+        cachingImageManager.requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
+            self.imageView.image = image
+        }
+    }
+    
 }

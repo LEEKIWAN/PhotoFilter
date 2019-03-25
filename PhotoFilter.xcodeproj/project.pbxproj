@@ -12,6 +12,10 @@
 		835002B122426BD100B4F7F2 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835002B022426BD100B4F7F2 /* PhotoCollectionViewController.swift */; };
 		835002B322426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 835002B222426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard */; };
 		835002B522426C2A00B4F7F2 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835002B422426C2A00B4F7F2 /* PhotoCollectionViewCell.swift */; };
+		83B3E2A322479D2B0052E30B /* PhotoEditViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B3E2A222479D2B0052E30B /* PhotoEditViewController.storyboard */; };
+		83B3E2A522479D3B0052E30B /* PhotoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3E2A422479D3B0052E30B /* PhotoEditViewController.swift */; };
+		83B3E2A72247B01F0052E30B /* FilterCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3E2A62247B01F0052E30B /* FilterCollectionViewController.swift */; };
+		83B3E2A92247B17D0052E30B /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3E2A82247B17D0052E30B /* FilterCollectionViewCell.swift */; };
 		83C995F322393A0C0084EE8F /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C995F222393A0C0084EE8F /* AlbumCollectionViewCell.swift */; };
 		83DBA56B2237F033003DCD09 /* AlbumCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83DBA56A2237F033003DCD09 /* AlbumCollectionViewController.storyboard */; };
 		83DBA56D2237F041003DCD09 /* AlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBA56C2237F041003DCD09 /* AlbumCollectionViewController.swift */; };
@@ -26,6 +30,10 @@
 		835002B022426BD100B4F7F2 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		835002B222426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotoCollectionViewController.storyboard; sourceTree = "<group>"; };
 		835002B422426C2A00B4F7F2 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		83B3E2A222479D2B0052E30B /* PhotoEditViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotoEditViewController.storyboard; sourceTree = "<group>"; };
+		83B3E2A422479D3B0052E30B /* PhotoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoEditViewController.swift; path = PhotoFilter/PhotoEditViewController.swift; sourceTree = SOURCE_ROOT; };
+		83B3E2A62247B01F0052E30B /* FilterCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewController.swift; sourceTree = "<group>"; };
+		83B3E2A82247B17D0052E30B /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		83C995F222393A0C0084EE8F /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		83DBA56A2237F033003DCD09 /* AlbumCollectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlbumCollectionViewController.storyboard; sourceTree = "<group>"; };
 		83DBA56C2237F041003DCD09 /* AlbumCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +84,7 @@
 			children = (
 				83C995F222393A0C0084EE8F /* AlbumCollectionViewCell.swift */,
 				835002B422426C2A00B4F7F2 /* PhotoCollectionViewCell.swift */,
+				83B3E2A82247B17D0052E30B /* FilterCollectionViewCell.swift */,
 			);
 			path = CellModel;
 			sourceTree = "<group>";
@@ -85,6 +94,8 @@
 			children = (
 				83DBA56C2237F041003DCD09 /* AlbumCollectionViewController.swift */,
 				835002B022426BD100B4F7F2 /* PhotoCollectionViewController.swift */,
+				83B3E2A422479D3B0052E30B /* PhotoEditViewController.swift */,
+				83B3E2A62247B01F0052E30B /* FilterCollectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -94,6 +105,7 @@
 			children = (
 				83DBA56A2237F033003DCD09 /* AlbumCollectionViewController.storyboard */,
 				835002B222426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard */,
+				83B3E2A222479D2B0052E30B /* PhotoEditViewController.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				835002B322426BDA00B4F7F2 /* PhotoCollectionViewController.storyboard in Resources */,
+				83B3E2A322479D2B0052E30B /* PhotoEditViewController.storyboard in Resources */,
 				83EA95F322300DC800EF65DE /* LaunchScreen.storyboard in Resources */,
 				83DBA56B2237F033003DCD09 /* AlbumCollectionViewController.storyboard in Resources */,
 				83EA95F022300DC800EF65DE /* Assets.xcassets in Resources */,
@@ -202,6 +215,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83B3E2A92247B17D0052E30B /* FilterCollectionViewCell.swift in Sources */,
+				83B3E2A72247B01F0052E30B /* FilterCollectionViewController.swift in Sources */,
 				835002B122426BD100B4F7F2 /* PhotoCollectionViewController.swift in Sources */,
 				83C995F322393A0C0084EE8F /* AlbumCollectionViewCell.swift in Sources */,
 				83DBA56D2237F041003DCD09 /* AlbumCollectionViewController.swift in Sources */,
@@ -209,6 +224,7 @@
 				8347307F22412A4D00D961BB /* UIColor+Extension.swift in Sources */,
 				833D1421224523AC0057C4E1 /* AlbumObject.swift in Sources */,
 				835002B522426C2A00B4F7F2 /* PhotoCollectionViewCell.swift in Sources */,
+				83B3E2A522479D3B0052E30B /* PhotoEditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

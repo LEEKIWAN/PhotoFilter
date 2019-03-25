@@ -18,10 +18,13 @@ class PhotoCollectionViewController: UIViewController {
     var fetchResult: PHFetchResult<PHAsset>? {
         didSet {
             OperationQueue.main.addOperation {
+                self.collectionView.dataSource = self
+                self.collectionView.delegate = self
                 self.collectionView?.reloadData()
             }
         }
     }
+    
     var assetCollection: PHAssetCollection?
     
     // MARK: Privates
@@ -30,36 +33,11 @@ class PhotoCollectionViewController: UIViewController {
     // MARK:- Life Cycle
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
-    }
-}
-
-extension PhotoCollectionViewController {
-    
-    private func configureCell(_ cell: PhotoCollectionViewCell, collectionView: UICollectionView, indexPath: IndexPath) {
-        
-        guard let asset: PHAsset = self.fetchResult?.object(at: indexPath.item) else { return }
-        
-        let manager: PHCachingImageManager = self.cachingImageManager
-        let handler: (UIImage?, [AnyHashable:Any]?) -> Void = { image, _ in
-            
-            let cellAtIndex: UICollectionViewCell? = collectionView.cellForItem(at: indexPath)
-            
-            guard let cell: PhotoCollectionViewCell = cellAtIndex as? PhotoCollectionViewCell
-                else { return }
-            
-            cell.imageView.image = image
-        }
-        
-        manager.requestImage(for: asset,
-                             targetSize: CGSize(width: 100, height: 100),
-                             contentMode: PHImageContentMode.aspectFill,
-                             options: nil,
-                             resultHandler: handler)
-    }
+    }    
 }
 
 // MARK:- UICollectionViewDataSource
-extension PhotoCollectionViewController: UICollectionViewDataSource{
+extension PhotoCollectionViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -70,24 +48,27 @@ extension PhotoCollectionViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCollectionViewCell
         
-        let cell: PhotoCollectionViewCell
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCollectionViewCell
+        let asset: PHAsset = (self.fetchResult?.object(at: indexPath.item))!
+        cell.setData(asset: asset, cachingImageManager: self.cachingImageManager)
+        
         
         return cell
     }
-}
-
-extension PhotoCollectionViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell: PhotoCollectionViewCell = cell as? PhotoCollectionViewCell else {
-            return
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        self.configureCell(cell, collectionView: collectionView, indexPath: indexPath)
+        let storyboard = UIStoryboard(name: "PhotoEditViewController", bundle: Bundle.main)
+        let viewController = storyboard.instantiateInitialViewController() as! PhotoEditViewController
+        
+        viewController.asset = self.fetchResult?.object(at: indexPath.item)
+        viewController.assetCollection = self.assetCollection
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
+
 
 // MARK:- UICollectionViewDelegateFlowLayout
 extension PhotoCollectionViewController: UICollectionViewDelegateFlowLayout {
@@ -137,8 +118,7 @@ extension PhotoCollectionViewController {
         }
         
         changes.enumerateMoves { fromIndex, toIndex in
-            collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
-                                    to: IndexPath(item: toIndex, section: 0))
+            collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0), to: IndexPath(item: toIndex, section: 0))
         }
     }
 }
@@ -165,7 +145,7 @@ extension PhotoCollectionViewController: PHPhotoLibraryChangeObserver {
             if changes.hasIncrementalChanges {
                 self.updateCollectionView(with: changes)
             } else {
-                self.collectionView?.reloadSections(IndexSet(0...0))
+                self.collectionView?.reloadData()
             }
         }
     }
@@ -176,10 +156,9 @@ extension PhotoCollectionViewController {
     // MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 사진 라이브러리 변경을 감지할 수 있도록 등록
         PHPhotoLibrary.shared().register(self)
     }
+    
 }
 
 extension PhotoCollectionViewController {
